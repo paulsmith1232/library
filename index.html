@@ -10,42 +10,47 @@
   </head>
   <body>
     <div class="overlay hidden"></div>
-    <div class="header">
-      <div class="modal-container hidden">
-        <section class="modal">
-          <div class="modal-header">
-            <button class="close-modal-button">x</button>
-          </div>
-          <div>
-            <form action="" id="bookForm">
-              <label for="title">Title</label>
-              <input type="text" id="title" name="title" />
-              <label for="author">Author</label>
-              <input type="text" id="author" name="author" />
-              <label for="date">Date</label>
-              <input type="date" id="date" name="date" />
-              <label for="pages">Pages</label>
-              <input type="number" id="pages" name="pages" />
-              <div class="read-selection">
-                <div>
-                  <label for="read">Read</label>
-                  <input type="radio" id="read" name="read_status" value="true" />
-                </div>
-                <div>
-                  <label for="unread">Unread</label>
-                  <input type="radio" id="unread" name="read_status" value="false" />
-                </div>
-              </div>
-              <button type="submit">Submit</button>
-            </form>
-          </div>
-          <button>Submit</button>
-        </section>
-      </div>
-      <button class="open-modal-button">Modal</button>
-      <p>Please add a book to the library</p>
-    
+    <div class="header-container">
+      <div class="header">
+        <p>Please add a book to the library</p>
+        <button class="open-modal-button">
+          <img src="./resources/plus-circle.svg" alt="" srcset="">
+        </button>
+      </div>    
     </div>
-    <div class="content"></div>
+    <div class="content-container">
+      <div class="content"></div>
+    </div>
+    <div class="modal-container hidden">
+      <section class="modal">
+        <div class="modal-header">
+          <button class="close-modal-button">
+            <img src="./resources/x-circle.svg" alt="">
+          </button>
+        </div>
+        <p>Enter book details:</p>
+        <form action="" id="bookForm">
+          <label for="title">Title</label>
+          <input type="text" id="title" name="title" />
+          <label for="author">Author</label>
+          <input type="text" id="author" name="author" />
+          <label for="date">Date</label>
+          <input type="date" id="date" name="date" />
+          <label for="pages">Pages</label>
+          <input type="number" id="pages" name="pages" />
+          <div class="read-selection">
+            <div>
+              <label for="read">Read</label>
+              <input type="radio" id="read" name="read_status" value="true" />
+            </div>
+            <div>
+              <label for="unread">Unread</label>
+              <input type="radio" id="unread" name="read_status" value="false" />
+            </div>
+          </div>
+          <button type="submit">Submit</button>
+        </form>
+      </section>
+    </div>
   </body>
 </html>
