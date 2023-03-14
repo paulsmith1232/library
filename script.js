@@ -4,6 +4,11 @@ const modal = document.querySelector(".modal-container");
 const overlay = document.querySelector(".overlay");
 const openModalBtn = document.querySelector(".open-modal-button");
 const closeModalBtn = document.querySelector(".close-modal-button");
+const bookTitle = document.getElementById("title");
+const bookAuthor = document.getElementById("author");
+const bookDate = document.getElementById("date");
+const bookPages = document.getElementById("pages");
+const bookRead = document.getElementById("read");
 
 function Book(title, author, date, pages, readStatus) {
   this.title = title;
@@ -21,8 +26,17 @@ Book.prototype.info = function info() {
 
 Book.prototype.readToggle = function readToggle() {
   this.read = !this.read;
+  console.log('test')
   refreshDisplay();
 };
+
+function iconToggle(icon) {
+  if(icon.classList.contains('mouseover-event')){
+    icon.classList.remove('mouseover-event');
+  } else {
+    icon.classList.add('mouseover-event');
+  }
+}
 
 function refreshDisplay() {
   const bookDisplay = document.querySelector(".content");
@@ -32,30 +46,39 @@ function refreshDisplay() {
     const div = document.createElement("div");
     div.classList.add("book-card");
     div.innerHTML = `
-    <p class="book-title">${book.title}</p>
-    <p class="book-author">by ${book.author}</p>
-    <p class="book-date">Publication date: </p>
-    <p>${book.date} </p>
-    <p class="book-pages">Page count: </p>
-    <p>${book.pages}</p>
-    <p class="book-read-status">Read: ${book.read.toString()}</p>   
-    <button class="delete-button" data-index-number=${index}>Remove</button> 
+      <h2 class="book-title">${book.title}</h2>
+      <p class="book-author">by ${book.author}</p>
+      <p class="book-date">Publication date: ${book.date}</p>
+      <p class="book-date-value"> </p>
+
+      <button id="button-id-${index}" onmouseover="iconToggle(this)" onmouseout="iconToggle(this)" class="book-read-status-button">
+        <img src="./resources/eye.svg" >
+      </button>
+      <button onmouseover="iconToggle(this)" onmouseout="iconToggle(this)" class="book-delete-button" data-index-number=${index}>
+        <img src="./resources/trash-2.svg" class="delete-button-svg">
+      </button> 
+      <p class="book-pages">
+        <img src="./resources/book-open.svg" class="book-pages-icon">
+        ${book.pages}
+      </p>
     `;
-    const button = document.createElement("button");
-    button.classList.add("read-status-button")
-    button.innerHTML = "Read Status";
-    button.onclick = function() {book.readToggle()};
-    div.appendChild(button);
     bookDisplay.appendChild(div);
+    const readButton = document.getElementById(`button-id-${index}`);
+
+    if(book.read !== true){
+      readButton.classList.add("unread");
+    }
+    readButton.onclick = function() {book.readToggle()};
   });
+  
 
   // add event listeners to delete buttons
-  const deleteButtons = document.querySelectorAll(".delete-button");
+  const deleteButtons = document.querySelectorAll(".book-delete-button");
   deleteButtons.forEach((button) => {
     button.addEventListener("click", () => {
       myLibrary.splice(button.dataset.indexNumber, 1);
       refreshDisplay();
-    });
+    })
   });
 }
 
@@ -74,27 +97,26 @@ function closeModal() {
   overlay.classList.add("hidden");
 }
 
+function clearForm() {
+  bookForm.reset();
+}
+
 openModalBtn.addEventListener("click", openModal);
 closeModalBtn.addEventListener("click", closeModal);
 
 
 bookForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  const bookTitle = document.getElementById("title").value;
-  const bookAuthor = document.getElementById("author").value;
-  const bookDate = document.getElementById("date").value;
-  const bookPages = document.getElementById("pages").value;
-  const bookRead = document.querySelector("input[name='read_status']:checked");
-
   const newBook = new Book(
-    bookTitle,
-    bookAuthor,
-    bookDate,
-    bookPages,
-    bookRead
+    bookTitle.value,
+    bookAuthor.value,
+    bookDate.value,
+    bookPages.value,
+    bookRead.checked
   );
-
   addBookToLibrary(newBook);
+  closeModal();
+  clearForm();
 });
 
 const book1 = new Book("The Hobbit", "J.R.R. Tolkien", "1937/09/21", 295, true);
@@ -114,22 +136,6 @@ const book3 = new Book(
 );
 const book4 = new Book("The Shining", "Stephen King", "1977/01/28", 447, false);
 
-addBookToLibrary(book1);
-addBookToLibrary(book2);
-addBookToLibrary(book3);
-addBookToLibrary(book4);
-addBookToLibrary(book1);
-addBookToLibrary(book2);
-addBookToLibrary(book3);
-addBookToLibrary(book4);
-addBookToLibrary(book1);
-addBookToLibrary(book2);
-addBookToLibrary(book3);
-addBookToLibrary(book4);
-addBookToLibrary(book1);
-addBookToLibrary(book2);
-addBookToLibrary(book3);
-addBookToLibrary(book4);
 addBookToLibrary(book1);
 addBookToLibrary(book2);
 addBookToLibrary(book3);
